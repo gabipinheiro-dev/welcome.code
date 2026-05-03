@@ -1,0 +1,240 @@
+2026-05-02 06:59:22,065 - __main__ - INFO - Iniciando polling...
+2026-05-02 07:00:14,980 - __main__ - INFO - Iniciando polling...
+2026-05-02 07:00:43,248 - __main__ - INFO - Iniciando polling...
+2026-05-02 07:03:41,029 - __main__ - INFO - Iniciando polling...
+2026-05-02 07:17:06,410 - TeleBot - ERROR - Threaded polling exception: A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: query is too old and response timeout expired or query ID is invalid
+2026-05-02 07:17:06,411 - TeleBot - ERROR - Exception traceback:
+Traceback (most recent call last):
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\__init__.py", line 1235, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\util.py", line 150, in raise_exceptions
+    raise self.exception_info
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\util.py", line 93, in run
+    task(*args, **kwargs)
+    ~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\__init__.py", line 9233, in _run_middlewares_and_handler
+    result = handler['function'](message)
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\src\main.py", line 121, in tipo_pessoa_callback
+    bot.answer_callback_query(call.id)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\__init__.py", line 6058, in answer_callback_query
+    return apihelper.answer_callback_query(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.token, callback_query_id, text=text, show_alert=show_alert, url=url, cache_time=cache_time)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\apihelper.py", line 1854, in answer_callback_query
+    return _make_request(token, method_url, params=payload, method='post')
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\apihelper.py", line 168, in _make_request
+    json_result = _check_result(method_name, result)
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\apihelper.py", line 195, in _check_result
+    raise ApiTelegramException(method_name, result, result_json)
+telebot.apihelper.ApiTelegramException: A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: query is too old and response timeout expired or query ID is invalid
+
+2026-05-02 07:17:41,753 - TeleBot - ERROR - Threaded polling exception: A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: query is too old and response timeout expired or query ID is invalid
+2026-05-02 07:17:41,755 - TeleBot - ERROR - Exception traceback:
+Traceback (most recent call last):
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\__init__.py", line 1235, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\util.py", line 150, in raise_exceptions
+    raise self.exception_info
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\util.py", line 93, in run
+    task(*args, **kwargs)
+    ~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\__init__.py", line 9233, in _run_middlewares_and_handler
+    result = handler['function'](message)
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\src\main.py", line 126, in bebe_callback
+    bot.answer_callback_query(call.id)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\__init__.py", line 6058, in answer_callback_query
+    return apihelper.answer_callback_query(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.token, callback_query_id, text=text, show_alert=show_alert, url=url, cache_time=cache_time)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\apihelper.py", line 1854, in answer_callback_query
+    return _make_request(token, method_url, params=payload, method='post')
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\apihelper.py", line 168, in _make_request
+    json_result = _check_result(method_name, result)
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\apihelper.py", line 195, in _check_result
+    raise ApiTelegramException(method_name, result, result_json)
+telebot.apihelper.ApiTelegramException: A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: query is too old and response timeout expired or query ID is invalid
+
+2026-05-02 07:17:51,035 - TeleBot - ERROR - Threaded polling exception: A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: query is too old and response timeout expired or query ID is invalid
+2026-05-02 07:17:51,037 - TeleBot - ERROR - Exception traceback:
+Traceback (most recent call last):
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\__init__.py", line 1235, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\util.py", line 150, in raise_exceptions
+    raise self.exception_info
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\util.py", line 93, in run
+    task(*args, **kwargs)
+    ~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\__init__.py", line 9233, in _run_middlewares_and_handler
+    result = handler['function'](message)
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\src\main.py", line 126, in bebe_callback
+    bot.answer_callback_query(call.id)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\__init__.py", line 6058, in answer_callback_query
+    return apihelper.answer_callback_query(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.token, callback_query_id, text=text, show_alert=show_alert, url=url, cache_time=cache_time)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\apihelper.py", line 1854, in answer_callback_query
+    return _make_request(token, method_url, params=payload, method='post')
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\apihelper.py", line 168, in _make_request
+    json_result = _check_result(method_name, result)
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\apihelper.py", line 195, in _check_result
+    raise ApiTelegramException(method_name, result, result_json)
+telebot.apihelper.ApiTelegramException: A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: query is too old and response timeout expired or query ID is invalid
+
+2026-05-02 08:07:41,637 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/setWebhook params={'url': ''} files=None
+2026-05-02 08:07:57,277 - DEBUG - The server returned: 'b'{"ok":true,"result":true,"description":"Webhook is already deleted"}''
+2026-05-02 08:07:57,277 - WARNING - The parameter "none_stop" is deprecated. Use "non_stop" instead.
+2026-05-02 08:07:57,278 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': -1, 'timeout': 20, 'long_polling_timeout': 20} files=None
+2026-05-02 08:07:57,482 - DEBUG - The server returned: 'b'{"ok":true,"result":[{"update_id":406830815,\n"message":{"message_id":459,"from":{"id":1182756418,"is_bot":false,"first_name":"Jos\\u00e9","last_name":"Sousa","language_code":"pt-br"},"chat":{"id":1182756418,"first_name":"Jos\\u00e9","last_name":"Sousa","type":"private"},"date":1777720046,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}]}''
+2026-05-02 08:07:57,482 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getMe params=None files=None
+2026-05-02 08:07:57,686 - DEBUG - The server returned: 'b'{"ok":true,"result":{"id":8776910655,"is_bot":true,"first_name":"Vacina Bot","username":"vacina_api_bot","can_join_groups":true,"can_read_all_group_messages":false,"supports_inline_queries":false,"can_connect_to_business":false,"has_main_web_app":false,"has_topics_enabled":false,"allows_users_to_create_topics":false,"can_manage_bots":false}}''
+2026-05-02 08:07:57,687 - INFO - Starting your bot with username: [@vacina_api_bot]
+2026-05-02 08:07:57,687 - INFO - Started polling.
+2026-05-02 08:07:57,688 - DEBUG - Received task
+2026-05-02 08:07:57,688 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': 1, 'timeout': 60, 'long_polling_timeout': 20} files=None
+2026-05-02 08:08:19,399 - DEBUG - The server returned: 'b'{"ok":true,"result":[{"update_id":406830815,\n"message":{"message_id":459,"from":{"id":1182756418,"is_bot":false,"first_name":"Jos\\u00e9","last_name":"Sousa","language_code":"pt-br"},"chat":{"id":1182756418,"first_name":"Jos\\u00e9","last_name":"Sousa","type":"private"},"date":1777720046,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}},{"update_id":406830816,\n"message":{"message_id":460,"from":{"id":1182756418,"is_bot":false,"first_name":"Jos\\u00e9","last_name":"Sousa","language_code":"pt-br"},"chat":{"id":1182756418,"first_name":"Jos\\u00e9","last_name":"Sousa","type":"private"},"date":1777720067,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}]}''
+2026-05-02 08:08:19,400 - DEBUG - Received 2 new updates
+2026-05-02 08:08:19,400 - DEBUG - Task complete
+2026-05-02 08:08:19,400 - DEBUG - Received task
+2026-05-02 08:08:19,401 - DEBUG - Received task
+2026-05-02 08:08:19,401 - DEBUG - Request: method=post url=https://api.telegram.org/bot8776910655:{TOKEN}/sendMessage params={'chat_id': '1182756418', 'text': '✨ 🤖 *Bem-vindo ao HealthyBot!* ✨\n\n👋 Oi! Eu sou o *HealthyBot* 😊\n\nVou te ajudar a encontrar seu Calendário de Vacinação 💉\n\nPara começar, qual é o seu nome?\n\n', 'reply_markup': '{"inline_keyboard": [[{"text": "\\u2139\\ufe0f Saiba Mais", "callback_data": "saiba_mais"}]]}', 'parse_mode': 'Markdown'} files=None
+2026-05-02 08:08:19,401 - DEBUG - Received task
+2026-05-02 08:08:19,402 - DEBUG - Request: method=post url=https://api.telegram.org/bot8776910655:{TOKEN}/sendMessage params={'chat_id': '1182756418', 'text': '✨ 🤖 *Bem-vindo ao HealthyBot!* ✨\n\n👋 Oi! Eu sou o *HealthyBot* 😊\n\nVou te ajudar a encontrar seu Calendário de Vacinação 💉\n\nPara começar, qual é o seu nome?\n\n', 'reply_markup': '{"inline_keyboard": [[{"text": "\\u2139\\ufe0f Saiba Mais", "callback_data": "saiba_mais"}]]}', 'parse_mode': 'Markdown'} files=None
+2026-05-02 08:08:19,403 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': 406830817, 'timeout': 60, 'long_polling_timeout': 20} files=None
+2026-05-02 08:08:20,173 - DEBUG - The server returned: 'b'{"ok":true,"result":{"message_id":461,"from":{"id":8776910655,"is_bot":true,"first_name":"Vacina Bot","username":"vacina_api_bot"},"chat":{"id":1182756418,"first_name":"Jos\\u00e9","last_name":"Sousa","type":"private"},"date":1777720072,"text":"\\u2728 \\ud83e\\udd16 Bem-vindo ao HealthyBot! \\u2728\\n\\n\\ud83d\\udc4b Oi! Eu sou o HealthyBot \\ud83d\\ude0a\\n\\nVou te ajudar a encontrar seu Calend\\u00e1rio de Vacina\\u00e7\\u00e3o \\ud83d\\udc89\\n\\nPara come\\u00e7ar, qual \\u00e9 o seu nome?","entities":[{"offset":5,"length":24,"type":"bold"},{"offset":49,"length":10,"type":"bold"}],"reply_markup":{"inline_keyboard":[[{"text":"\\u2139\\ufe0f Saiba Mais","callback_data":"saiba_mais"}]]}}}''
+2026-05-02 08:08:20,174 - DEBUG - Task complete
+2026-05-02 08:08:23,089 - DEBUG - The server returned: 'b'{"ok":true,"result":[{"update_id":406830817,\n"callback_query":{"id":"5079900135733472372","from":{"id":1182756418,"is_bot":false,"first_name":"Jos\\u00e9","last_name":"Sousa","language_code":"pt-br"},"message":{"message_id":461,"from":{"id":8776910655,"is_bot":true,"first_name":"Vacina Bot","username":"vacina_api_bot"},"chat":{"id":1182756418,"first_name":"Jos\\u00e9","last_name":"Sousa","type":"private"},"date":1777720072,"text":"\\u2728 \\ud83e\\udd16 Bem-vindo ao HealthyBot! \\u2728\\n\\n\\ud83d\\udc4b Oi! Eu sou o HealthyBot \\ud83d\\ude0a\\n\\nVou te ajudar a encontrar seu Calend\\u00e1rio de Vacina\\u00e7\\u00e3o \\ud83d\\udc89\\n\\nPara come\\u00e7ar, qual \\u00e9 o seu nome?","entities":[{"offset":5,"length":24,"type":"bold"},{"offset":49,"length":10,"type":"bold"}],"reply_markup":{"inline_keyboard":[[{"text":"\\u2139\\ufe0f Saiba Mais","callback_data":"saiba_mais"}]]}},"chat_instance":"-4868557925506736606","data":"saiba_mais"}}]}''
+2026-05-02 08:08:23,089 - DEBUG - Received 1 new updates
+2026-05-02 08:08:23,090 - DEBUG - Task complete
+2026-05-02 08:08:23,090 - DEBUG - Received task
+2026-05-02 08:08:23,090 - DEBUG - Received task
+2026-05-02 08:08:23,091 - DEBUG - Request: method=post url=https://api.telegram.org/bot8776910655:{TOKEN}/answerCallbackQuery params={'callback_query_id': '5079900135733472372'} files=None
+2026-05-02 08:08:23,091 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': 406830818, 'timeout': 60, 'long_polling_timeout': 20} files=None
+2026-05-02 08:08:23,869 - DEBUG - The server returned: 'b'{"ok":true,"result":true}''
+2026-05-02 08:08:23,870 - DEBUG - Task complete
+2026-05-02 08:08:32,764 - DEBUG - The server returned: 'b'{"ok":true,"result":[{"update_id":406830818,\n"callback_query":{"id":"5079900136336797402","from":{"id":1182756418,"is_bot":false,"first_name":"Jos\\u00e9","last_name":"Sousa","language_code":"pt-br"},"message":{"message_id":461,"from":{"id":8776910655,"is_bot":true,"first_name":"Vacina Bot","username":"vacina_api_bot"},"chat":{"id":1182756418,"first_name":"Jos\\u00e9","last_name":"Sousa","type":"private"},"date":1777720072,"text":"\\u2728 \\ud83e\\udd16 Bem-vindo ao HealthyBot! \\u2728\\n\\n\\ud83d\\udc4b Oi! Eu sou o HealthyBot \\ud83d\\ude0a\\n\\nVou te ajudar a encontrar seu Calend\\u00e1rio de Vacina\\u00e7\\u00e3o \\ud83d\\udc89\\n\\nPara come\\u00e7ar, qual \\u00e9 o seu nome?","entities":[{"offset":5,"length":24,"type":"bold"},{"offset":49,"length":10,"type":"bold"}],"reply_markup":{"inline_keyboard":[[{"text":"\\u2139\\ufe0f Saiba Mais","callback_data":"saiba_mais"}]]}},"chat_instance":"-4868557925506736606","data":"saiba_mais"}}]}''
+2026-05-02 08:08:32,765 - DEBUG - Received 1 new updates
+2026-05-02 08:08:32,765 - DEBUG - Task complete
+2026-05-02 08:08:32,765 - DEBUG - Received task
+2026-05-02 08:08:32,765 - DEBUG - Received task
+2026-05-02 08:08:32,766 - DEBUG - Request: method=post url=https://api.telegram.org/bot8776910655:{TOKEN}/answerCallbackQuery params={'callback_query_id': '5079900136336797402'} files=None
+2026-05-02 08:08:32,766 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': 406830819, 'timeout': 60, 'long_polling_timeout': 20} files=None
+2026-05-02 08:08:33,098 - DEBUG - The server returned: 'b'{"ok":true,"result":true}''
+2026-05-02 08:08:33,098 - DEBUG - Task complete
+2026-05-02 08:08:35,252 - DEBUG - The server returned: 'b'{"ok":true,"result":{"message_id":462,"from":{"id":8776910655,"is_bot":true,"first_name":"Vacina Bot","username":"vacina_api_bot"},"chat":{"id":1182756418,"first_name":"Jos\\u00e9","last_name":"Sousa","type":"private"},"date":1777720088,"text":"\\u2728 \\ud83e\\udd16 Bem-vindo ao HealthyBot! \\u2728\\n\\n\\ud83d\\udc4b Oi! Eu sou o HealthyBot \\ud83d\\ude0a\\n\\nVou te ajudar a encontrar seu Calend\\u00e1rio de Vacina\\u00e7\\u00e3o \\ud83d\\udc89\\n\\nPara come\\u00e7ar, qual \\u00e9 o seu nome?","entities":[{"offset":5,"length":24,"type":"bold"},{"offset":49,"length":10,"type":"bold"}],"reply_markup":{"inline_keyboard":[[{"text":"\\u2139\\ufe0f Saiba Mais","callback_data":"saiba_mais"}]]}}}''
+2026-05-02 08:08:35,252 - DEBUG - Task complete
+2026-05-02 08:08:38,821 - DEBUG - The server returned: 'b'{"ok":true,"result":[{"update_id":406830819,\n"callback_query":{"id":"5079900135395209430","from":{"id":1182756418,"is_bot":false,"first_name":"Jos\\u00e9","last_name":"Sousa","language_code":"pt-br"},"message":{"message_id":462,"from":{"id":8776910655,"is_bot":true,"first_name":"Vacina Bot","username":"vacina_api_bot"},"chat":{"id":1182756418,"first_name":"Jos\\u00e9","last_name":"Sousa","type":"private"},"date":1777720088,"text":"\\u2728 \\ud83e\\udd16 Bem-vindo ao HealthyBot! \\u2728\\n\\n\\ud83d\\udc4b Oi! Eu sou o HealthyBot \\ud83d\\ude0a\\n\\nVou te ajudar a encontrar seu Calend\\u00e1rio de Vacina\\u00e7\\u00e3o \\ud83d\\udc89\\n\\nPara come\\u00e7ar, qual \\u00e9 o seu nome?","entities":[{"offset":5,"length":24,"type":"bold"},{"offset":49,"length":10,"type":"bold"}],"reply_markup":{"inline_keyboard":[[{"text":"\\u2139\\ufe0f Saiba Mais","callback_data":"saiba_mais"}]]}},"chat_instance":"-4868557925506736606","data":"saiba_mais"}}]}''
+2026-05-02 08:08:38,821 - DEBUG - Received 1 new updates
+2026-05-02 08:08:38,822 - DEBUG - Task complete
+2026-05-02 08:08:38,822 - DEBUG - Received task
+2026-05-02 08:08:38,822 - DEBUG - Received task
+2026-05-02 08:08:38,823 - DEBUG - Request: method=post url=https://api.telegram.org/bot8776910655:{TOKEN}/answerCallbackQuery params={'callback_query_id': '5079900135395209430'} files=None
+2026-05-02 08:08:38,823 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': 406830820, 'timeout': 60, 'long_polling_timeout': 20} files=None
+2026-05-02 08:08:47,568 - DEBUG - The server returned: 'b'{"ok":true,"result":[{"update_id":406830820,\n"callback_query":{"id":"5079900137154651307","from":{"id":1182756418,"is_bot":false,"first_name":"Jos\\u00e9","last_name":"Sousa","language_code":"pt-br"},"message":{"message_id":462,"from":{"id":8776910655,"is_bot":true,"first_name":"Vacina Bot","username":"vacina_api_bot"},"chat":{"id":1182756418,"first_name":"Jos\\u00e9","last_name":"Sousa","type":"private"},"date":1777720088,"text":"\\u2728 \\ud83e\\udd16 Bem-vindo ao HealthyBot! \\u2728\\n\\n\\ud83d\\udc4b Oi! Eu sou o HealthyBot \\ud83d\\ude0a\\n\\nVou te ajudar a encontrar seu Calend\\u00e1rio de Vacina\\u00e7\\u00e3o \\ud83d\\udc89\\n\\nPara come\\u00e7ar, qual \\u00e9 o seu nome?","entities":[{"offset":5,"length":24,"type":"bold"},{"offset":49,"length":10,"type":"bold"}],"reply_markup":{"inline_keyboard":[[{"text":"\\u2139\\ufe0f Saiba Mais","callback_data":"saiba_mais"}]]}},"chat_instance":"-4868557925506736606","data":"saiba_mais"}}]}''
+2026-05-02 08:08:47,569 - DEBUG - Received 1 new updates
+2026-05-02 08:08:47,569 - DEBUG - Task complete
+2026-05-02 08:08:47,569 - DEBUG - Received task
+2026-05-02 08:08:47,570 - DEBUG - Received task
+2026-05-02 08:08:47,570 - DEBUG - Request: method=post url=https://api.telegram.org/bot8776910655:{TOKEN}/answerCallbackQuery params={'callback_query_id': '5079900137154651307'} files=None
+2026-05-02 08:08:47,570 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': 406830821, 'timeout': 60, 'long_polling_timeout': 20} files=None
+2026-05-02 08:08:47,908 - DEBUG - The server returned: 'b'{"ok":true,"result":true}''
+2026-05-02 08:08:47,909 - DEBUG - Task complete
+2026-05-02 08:08:54,596 - DEBUG - The server returned: 'b'{"ok":false,"error_code":400,"description":"Bad Request: query is too old and response timeout expired or query ID is invalid"}''
+2026-05-02 08:08:54,596 - DEBUG - Task complete
+2026-05-02 08:09:07,791 - DEBUG - The server returned: 'b'{"ok":true,"result":[]}''
+2026-05-02 08:09:07,792 - DEBUG - Received 0 new updates
+2026-05-02 08:09:07,792 - DEBUG - Task complete
+2026-05-02 08:09:07,792 - DEBUG - Received task
+2026-05-02 08:09:07,793 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': 406830821, 'timeout': 60, 'long_polling_timeout': 20} files=None
+2026-05-02 08:09:28,005 - DEBUG - The server returned: 'b'{"ok":true,"result":[]}''
+2026-05-02 08:09:28,006 - DEBUG - Received 0 new updates
+2026-05-02 08:09:28,006 - DEBUG - Task complete
+2026-05-02 08:09:28,006 - DEBUG - Received task
+2026-05-02 08:09:28,007 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': 406830821, 'timeout': 60, 'long_polling_timeout': 20} files=None
+2026-05-02 08:09:48,225 - DEBUG - The server returned: 'b'{"ok":true,"result":[]}''
+2026-05-02 08:09:48,225 - DEBUG - Received 0 new updates
+2026-05-02 08:09:48,226 - DEBUG - Task complete
+2026-05-02 08:09:48,226 - DEBUG - Received task
+2026-05-02 08:09:48,226 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': 406830821, 'timeout': 60, 'long_polling_timeout': 20} files=None
+2026-05-02 08:10:08,436 - DEBUG - The server returned: 'b'{"ok":true,"result":[]}''
+2026-05-02 08:10:08,436 - DEBUG - Received 0 new updates
+2026-05-02 08:10:08,436 - DEBUG - Task complete
+2026-05-02 08:10:08,437 - DEBUG - Received task
+2026-05-02 08:10:08,437 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': 406830821, 'timeout': 60, 'long_polling_timeout': 20} files=None
+2026-05-02 08:10:28,663 - DEBUG - The server returned: 'b'{"ok":true,"result":[]}''
+2026-05-02 08:10:28,664 - DEBUG - Received 0 new updates
+2026-05-02 08:10:28,664 - DEBUG - Task complete
+2026-05-02 08:10:28,665 - DEBUG - Received task
+2026-05-02 08:10:28,665 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': 406830821, 'timeout': 60, 'long_polling_timeout': 20} files=None
+2026-05-02 08:10:31,756 - INFO - KeyboardInterrupt received.
+2026-05-02 08:10:31,756 - INFO - Stopped polling.
+2026-05-02 08:10:31,757 - WARNING - The parameter "none_stop" is deprecated. Use "non_stop" instead.
+2026-05-02 08:10:31,757 - DEBUG - Request: method=get url=https://api.telegram.org/bot8776910655:{TOKEN}/getUpdates params={'offset': -1, 'timeout': 20, 'long_polling_timeout': 20} files=None
+2026-05-02 08:10:31,961 - DEBUG - The server returned: 'b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}''
+2026-05-02 08:10:31,966 - DEBUG - ApiTelegramException occurred, args=('A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running',)
+Traceback (most recent call last):
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\util.py", line 93, in run
+    task(*args, **kwargs)
+    ~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\__init__.py", line 688, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1),
+                               allowed_updates=allowed_updates,
+                               timeout=timeout, long_polling_timeout=long_polling_timeout)
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\__init__.py", line 660, in get_updates
+    json_updates = apihelper.get_updates(
+        self.token, offset=offset, limit=limit, timeout=timeout, allowed_updates=allowed_updates,
+        long_polling_timeout=long_polling_timeout)
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\apihelper.py", line 332, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\apihelper.py", line 168, in _make_request
+    json_result = _check_result(method_name, result)
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\.venv\Lib\site-packages\telebot\apihelper.py", line 195, in _check_result
+    raise ApiTelegramException(method_name, result, result_json)
+telebot.apihelper.ApiTelegramException: A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+
+2026-05-02 08:21:46,653 - INFO - Iniciando download do PDF: https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-crianca.pdf
+2026-05-02 08:21:46,814 - ERROR - Erro ao processar PDF (crianca): HTTP 404
+Traceback (most recent call last):
+  File "D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\src\scraping\scraper_pdf.py", line 46, in enviar_paginas_como_foto
+    raise Exception(f"HTTP {response.status_code}")
+Exception: HTTP 404
+2026-05-02 08:32:39,780 - WARNING - Não foi possível pré-carregar o cache: Arquivo não encontrado: D:\Fatec\Projeto\GIT ADS Fatec\welcome.code\src\calendario_vacinacao.xlsx
+2026-05-02 08:36:48,762 - INFO - Carregando calendario_vacinacao.xlsx pela primeira vez...
+2026-05-02 08:36:48,970 - INFO - Cache carregado: 21 fases disponíveis
+2026-05-02 08:36:48,970 - INFO - Cache do calendário carregado com sucesso!
+2026-05-02 08:45:59,453 - INFO - Carregando calendario_vacinacao.xlsx...
+2026-05-02 08:45:59,653 - INFO - Cache carregado: 21 fases
+2026-05-02 08:45:59,654 - INFO - Cache carregado com sucesso!
+2026-05-02 08:48:27,916 - INFO - Baixando PDF: https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-crianca
+2026-05-02 08:48:28,312 - INFO - PDF 'crianca' cacheado (372006 bytes)
+2026-05-02 08:49:49,764 - INFO - Baixando PDF: https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-idoso
+2026-05-02 08:49:50,147 - INFO - PDF 'idoso' cacheado (310473 bytes)
+2026-05-02 08:51:10,286 - INFO - PDF 'crianca' do cache
+2026-05-02 08:53:08,170 - INFO - Baixando PDF: https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-adulto
+2026-05-02 08:53:08,454 - INFO - PDF 'adulto' cacheado (299192 bytes)
+2026-05-02 08:55:43,177 - INFO - PDF 'crianca' do cache
+2026-05-02 09:03:58,735 - INFO - Bot encerrado.
+2026-05-02 09:04:44,136 - INFO - Carregando calendario_vacinacao.xlsx...
+2026-05-02 09:04:44,345 - INFO - Cache carregado: 21 fases
+2026-05-02 09:04:44,345 - INFO - Cache carregado com sucesso!
+2026-05-02 09:06:12,020 - INFO - Baixando PDF: https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-gestante
+2026-05-02 09:06:12,422 - INFO - PDF 'gestante' cacheado (302002 bytes)
+2026-05-02 09:07:30,685 - INFO - Baixando PDF: https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-crianca
+2026-05-02 09:07:31,046 - INFO - PDF 'crianca' cacheado (372006 bytes)
+2026-05-03 14:35:18,943 - INFO - Carregando calendario_vacinacao.xlsx...
+2026-05-03 14:35:19,331 - INFO - Cache carregado: 21 fases
+2026-05-03 14:35:19,331 - INFO - Cache carregado com sucesso!
+2026-05-03 14:35:39,828 - INFO - Carregando calendario_vacinacao.xlsx...
+2026-05-03 14:35:40,039 - INFO - Cache carregado: 21 fases
+2026-05-03 14:35:40,039 - INFO - Cache carregado com sucesso!
+2026-05-03 14:37:18,306 - INFO - Baixando PDF: https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-idoso
+2026-05-03 14:37:18,738 - INFO - PDF 'idoso' cacheado (310473 bytes)
+2026-05-03 14:37:54,417 - INFO - Bot encerrado pelo usuário.
