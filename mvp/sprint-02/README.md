@@ -1,10 +1,10 @@
 # 📦 MVP — Sprint 2
 
 ## 🎯 Objetivo
-Chat BOT devolver as possíveis vacinas pendentes e as próximas do usuário através de um cadastro personalizado focando na idade do mesmo.
+Chat BOT devolver respostas mais especificas de acordo com o perfil do usário, principalmente com base na sua idade.
 
 ## 💡 Solução
-Entregar as informações retiradas do scraping do site do governo em escrito para o usuário de acordo com seu cadastro.
+Um formulário inicial que coleta os dados do usuário como: nome, para quem ele está coletando, possíveis condições e idade.
 
 ## 👤 User Story
 | Rank | Prioridade | User story | Estimativa | Sprint |
@@ -42,9 +42,9 @@ Entregar as informações retiradas do scraping do site do governo em escrito pa
 | Qualidade | Código organizado e sem quebrar outras partes |
 
 ## 📊 Validação
-**Preencher**
+Testado manualmente por mais de uma pessoa e todas as respostas foram retornadas corretamente de acordo com a fonte oficial.
 
 ---
 
 ## 🚀 Próximos Passos
-**Preencher**
+Fornecer ao usuário informações sobre coberturas vacinais conforme sua localidade e coletar dados relevantes sobre comorbidades que possam impactar a elegibilidade ou recomendação de vacinas de acordo com seu perfil.

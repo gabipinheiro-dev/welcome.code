@@ -43,7 +43,7 @@ Nenhuma.
 | Qualidade | Código organizado e sem quebrar outras partes |
 
 ## 📊 Validação
-Testado manualmente por mais de uma pessoa e todas as respostas foram retornadas corretamente de acordo com a fonte ocicial
+Testado manualmente por mais de uma pessoa e todas as respostas foram retornadas corretamente de acordo com a fonte oficial
 
 ---
 
