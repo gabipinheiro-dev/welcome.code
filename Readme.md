@@ -226,7 +226,7 @@ O ambiente em nuvem permite que o bot sempre fique ativo independentemente de on
       <td>Marcos</td>
       <td>Desenvolvedor</td>
       <td><a href="https://github.com/marcosgalvaov"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"></a></td>
-      <td><a href="https://www.linkedin.com/in/marcos-guilherme-galvao/"></a></td>
+      <td><a href="https://www.linkedin.com/in/marcos-guilherme-galvao/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a></td>
     </tr>
     <tr>
       <td>Ana Paula Ramos</td>
