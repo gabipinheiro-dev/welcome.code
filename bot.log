@@ -238,3 +238,65 @@ Exception: HTTP 404
 2026-05-03 14:37:18,306 - INFO - Baixando PDF: https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-idoso
 2026-05-03 14:37:18,738 - INFO - PDF 'idoso' cacheado (310473 bytes)
 2026-05-03 14:37:54,417 - INFO - Bot encerrado pelo usuário.
+2026-05-03 17:20:06,967 - INFO - Fazendo scraping do site do Ministério da Saúde...
+2026-05-03 17:20:07,296 - INFO - Perfil 'gestante': 0 fases extraídas
+2026-05-03 17:20:07,310 - INFO - Perfil 'crianca': 0 fases extraídas
+2026-05-03 17:20:07,340 - WARNING - Bloco 'Adolescente e Jovem' não encontrado no HTML
+2026-05-03 17:20:07,341 - INFO - Perfil 'adolescente': 0 fases extraídas
+2026-05-03 17:20:07,360 - INFO - Perfil 'adulto': 0 fases extraídas
+2026-05-03 17:20:07,385 - INFO - Perfil 'idoso': 0 fases extraídas
+2026-05-03 17:20:07,386 - INFO - Cache carregado com sucesso!
+2026-05-03 17:22:11,975 - INFO - Fazendo scraping do site do Ministério da Saúde...
+2026-05-03 17:22:12,200 - INFO - Perfil 'crianca': 15 fases extraídas
+2026-05-03 17:22:12,212 - INFO - Perfil 'adolescente': 4 fases extraídas
+2026-05-03 17:22:12,225 - INFO - Perfil 'adulto': 1 fases extraídas
+2026-05-03 17:22:12,238 - INFO - Perfil 'idoso': 1 fases extraídas
+2026-05-03 17:22:12,252 - INFO - Perfil 'gestante': 3 fases extraídas
+2026-05-03 17:22:12,253 - INFO - Cache carregado com sucesso!
+2026-05-03 17:23:52,160 - INFO - Baixando PDF: https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-crianca
+2026-05-03 17:23:52,602 - INFO - PDF 'crianca' cacheado (372006 bytes)
+2026-05-03 17:27:55,778 - INFO - Fazendo scraping do site do Ministério da Saúde...
+2026-05-03 17:27:55,999 - INFO - Perfil 'crianca': 15 fases extraídas
+2026-05-03 17:27:56,010 - INFO - Perfil 'adolescente': 4 fases extraídas
+2026-05-03 17:27:56,021 - INFO - Perfil 'adulto': 1 fases extraídas
+2026-05-03 17:27:56,036 - INFO - Perfil 'idoso': 1 fases extraídas
+2026-05-03 17:27:56,052 - INFO - Perfil 'gestante': 3 fases extraídas
+2026-05-03 17:27:56,053 - INFO - Cache carregado com sucesso!
+2026-05-03 17:33:39,782 - INFO - Fazendo scraping do site do Ministério da Saúde...
+2026-05-03 17:33:39,986 - INFO - Perfil 'crianca': 15 fases extraídas
+2026-05-03 17:33:39,996 - INFO - Perfil 'adolescente': 4 fases extraídas
+2026-05-03 17:33:40,009 - INFO - Perfil 'adulto': 1 fases extraídas
+2026-05-03 17:33:40,019 - INFO - Perfil 'idoso': 1 fases extraídas
+2026-05-03 17:33:40,030 - INFO - Perfil 'gestante': 3 fases extraídas
+2026-05-03 17:33:40,031 - INFO - Cache carregado com sucesso!
+2026-05-03 17:36:25,103 - INFO - Baixando PDF: https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-gestante
+2026-05-03 17:36:25,506 - INFO - PDF 'gestante' cacheado (302002 bytes)
+2026-05-03 17:38:12,033 - INFO - Baixando PDF: https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-crianca
+2026-05-03 17:38:12,366 - INFO - PDF 'crianca' cacheado (372006 bytes)
+2026-05-03 18:06:00,416 - WARNING - Erro 409: conflito de instância. Reconectando em 15s...
+2026-05-03 18:07:05,480 - INFO - Buscando dados no site do Ministério da Saúde...
+2026-05-03 18:07:05,709 - INFO - Perfil 'crianca': 15 fases extraídas
+2026-05-03 18:07:05,722 - INFO - Perfil 'adolescente': 4 fases extraídas
+2026-05-03 18:07:05,733 - INFO - Perfil 'adulto': 1 fases extraídas
+2026-05-03 18:07:05,747 - INFO - Perfil 'idoso': 1 fases extraídas
+2026-05-03 18:07:05,758 - INFO - Perfil 'gestante': 3 fases extraídas
+2026-05-03 18:07:05,758 - INFO - Cache carregado com sucesso!
+2026-05-03 18:09:59,607 - INFO - Baixando PDF: https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-crianca
+2026-05-03 18:09:59,994 - INFO - PDF 'crianca' cacheado (372006 bytes)
+2026-05-03 18:20:02,865 - INFO - Bot encerrado pelo usuário.
+2026-05-03 18:20:07,604 - INFO - Buscando dados no site do Ministério da Saúde...
+2026-05-03 18:20:07,809 - INFO - Perfil 'crianca': 15 fases extraídas
+2026-05-03 18:20:07,819 - INFO - Perfil 'adolescente': 4 fases extraídas
+2026-05-03 18:20:07,834 - INFO - Perfil 'adulto': 1 fases extraídas
+2026-05-03 18:20:07,844 - INFO - Perfil 'idoso': 1 fases extraídas
+2026-05-03 18:20:07,856 - INFO - Perfil 'gestante': 3 fases extraídas
+2026-05-03 18:20:07,856 - INFO - Cache carregado com sucesso!
+2026-05-03 18:22:09,888 - INFO - Bot encerrado pelo usuário.
+2026-05-03 18:22:56,876 - INFO - Fazendo scraping do site do Ministério da Saúde...
+2026-05-03 18:22:57,110 - INFO - Perfil 'crianca': 15 fases extraídas
+2026-05-03 18:22:57,122 - INFO - Perfil 'adolescente': 4 fases extraídas
+2026-05-03 18:22:57,133 - INFO - Perfil 'adulto': 1 fases extraídas
+2026-05-03 18:22:57,144 - INFO - Perfil 'idoso': 1 fases extraídas
+2026-05-03 18:22:57,155 - INFO - Perfil 'gestante': 3 fases extraídas
+2026-05-03 18:22:57,156 - INFO - Cache carregado com sucesso!
+2026-05-03 18:34:46,731 - INFO - Bot encerrado pelo usuário.
