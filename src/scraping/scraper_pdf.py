@@ -1,16 +1,11 @@
-# - 'fitz' é usada para abrir e manipular arquivos PDF.
-# - 'requests' serve para fazer download de arquivos da internet.
-# - 'io' ajuda a trabalhar com dados em memória, sem salvar no disco.
+import fitz        # Biblioteca PyMuPDF para manipular PDFs
+import requests    # Para baixar o PDF da internet
+import io          # Para tratar o PDF em memória (sem salvar no disco)
 
-import fitz
-import requests
-import io
-
-# Aqui criamos um temporário chamado '_pdf_cache'.
-# Ele guarda os PDFs já baixados para não precisarmos baixar de novo.
+# Cache para não baixar o mesmo PDF várias vezes na mesma sessão
 _pdf_cache = {}
 
-# Um dicionário (lista com nomes) que contém links dos calendários por perfil:
+# Links diretos para os arquivos PDF no site do Ministério da Saúde
 LINKS_PDF = {
     'gestante':    'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-gestante',
     'crianca':     'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-crianca',
@@ -19,94 +14,74 @@ LINKS_PDF = {
     'idoso':       'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-idoso'
 }
 
-# Configurações adicionais para simular um navegador ao acessar sites:
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 }
 
-
-# Função para baixar o PDF de um determinado perfil (como criança, adulto etc.)
 def _baixar_pdf(perfil):
-    # Primeiro verifica se o PDF desse perfil já foi baixado antes
+    """Baixa o PDF do perfil solicitado ou recupera do cache interno."""
     if perfil in _pdf_cache:
-        return _pdf_cache[perfil]  # Retorna o PDF salvo no armário
+        return _pdf_cache[perfil]
 
-    # Pega o link do PDF correspondente ao perfil
     url = LINKS_PDF.get(perfil)
     if not url:
-        return None  # Se não encontrar, retorna nada
+        return None
 
-    print(f"🌐 Baixando PDF do perfil '{perfil}'...")
-
-    # Faz o pedido para baixar o arquivo da internet
+    print(f"📥 Baixando PDF oficial: {perfil}...")
     resposta = requests.get(url, timeout=30, headers=HEADERS, allow_redirects=True)
 
-    # Verifica se funcionou (status 200 significa sucesso)
     if resposta.status_code != 200:
-        raise Exception(f"❗ Erro HTTP {resposta.status_code} ao tentar baixar.")
+        raise Exception(f"Erro ao baixar PDF: Status {resposta.status_code}")
 
-    conteudo_do_pdf = resposta.content  # Conteúdo binário do PDF
+    conteudo = resposta.content
+    
+    # Validação simples para garantir que o que baixamos é realmente um PDF
+    if not conteudo.startswith(b'%PDF'):
+        raise Exception("O link não retornou um arquivo PDF válido.")
 
-    # Checa se realmente é um PDF (todo PDF começa com "%PDF")
-    if len(conteudo_do_pdf) < 4 or conteudo_do_pdf[:4] != b'%PDF':
-        raise Exception("❌ O conteúdo baixado não parece ser um PDF válido.")
+    _pdf_cache[perfil] = conteudo
+    return conteudo
 
-    # Guarda o PDF no armário para uso futuro
-    _pdf_cache[perfil] = conteudo_do_pdf
-    print(f"💾 PDF '{perfil}' guardado no cache.")
-    return conteudo_do_pdf
-
-
-# Função que envia todas as páginas do PDF como imagens pelo Telegram
 def enviar_paginas_como_foto(bot, chat_id, perfil):
-    # Tenta pegar o link do PDF baseado no perfil solicitado
-    url = LINKS_PDF.get(perfil)
-    if not url:
-        bot.send_message(chat_id, "⚠️ Calendário indisponível para este perfil.")
-        return
-
+    """Lê o PDF, transforma cada página em imagem e envia para o chat."""
+    url_reserva = LINKS_PDF.get(perfil, "https://www.gov.br/saude/pt-br/vacinacao")
+    
     try:
-        # Baixa o PDF usando a função anterior
         pdf_bytes = _baixar_pdf(perfil)
+        if not pdf_bytes:
+            bot.send_message(chat_id, "⚠️ O link deste calendário não foi encontrado.")
+            return
 
-        # Abre o PDF diretamente da memória
+        # Abre o PDF diretamente da memória (BytesIO)
         doc = fitz.open(stream=io.BytesIO(pdf_bytes), filetype="pdf")
-        total_paginas = len(doc)  # Conta quantas páginas tem
+        total_pg = len(doc)
 
-        # Para cada página do PDF...
-        for numero_da_pagina in range(total_paginas):
+        for num in range(total_pg):
             try:
-                # Carrega a página atual
-                pagina = doc.load_page(numero_da_pagina)
+                pagina = doc.load_page(num)
+                
+                # 'Matrix(2, 2)' dobra a resolução da imagem para que os textos fiquem legíveis
+                pix = pagina.get_pixmap(matrix=fitz.Matrix(2, 2))
+                
+                # Converte para formato JPEG reconhecido pelo Telegram
+                img_data = io.BytesIO(pix.tobytes("jpeg"))
+                img_data.name = f"calendario_{perfil}_p{num+1}.jpg"
 
-                # Converte a página em imagem com qualidade maior (Matrix aumenta a resolução)
-                imagem = pagina.get_pixmap(matrix=fitz.Matrix(2, 2))
-
-                # Transforma a imagem num formato que pode ser enviado
-                img_io = io.BytesIO(imagem.tobytes("jpeg"))
-
-                # Define um nome para a imagem
-                img_io.name = f'calendario_{perfil}_pg{numero_da_pagina + 1}.jpg'
-
-                # Envia a imagem pelo Telegram
                 bot.send_photo(
-                    chat_id,
-                    img_io,
-                    caption=f"📄 Calendário {perfil.capitalize()} - Página {numero_da_pagina + 1}/{total_paginas}"
+                    chat_id, 
+                    img_data, 
+                    caption=f"📄 Calendário {perfil.capitalize()} - Pág. {num+1}/{total_pg}"
                 )
-            except Exception as erro_na_pagina:
-                print(f"Erro na página {numero_da_pagina + 1}: {erro_na_pagina}")
-                bot.send_message(chat_id, f"⚠️ Problema na página {numero_da_pagina + 1}")
+            except Exception as e_pg:
+                print(f"Erro na página {num+1}: {e_pg}")
 
-        doc.close()  # Fecha o documento após terminar
+        doc.close()
 
-    except requests.exceptions.Timeout:
-        bot.send_message(chat_id, "⏳ Tempo esgotado ao tentar acessar o site. Tente mais tarde.")
-
-    except requests.exceptions.RequestException as erro_rede:
-        print(f"Problema de conexão ({perfil}): {erro_rede}")
-        bot.send_message(chat_id, "❌ Não consegui acessar o site do Ministério da Saúde.")
-
-    except Exception as erro_geral:
-        print(f"Falha geral ao processar o PDF ({perfil}): {erro_geral}")
-        bot.send_message(chat_id, f"❌ Erro ao carregar o calendário.\n\n🔗 Veja aqui:\n{url}")
+    except Exception as e:
+        print(f"Erro ao processar PDF ({perfil}): {e}")
+        # Caso o download ou processamento falhe, enviamos o link direto como alternativa
+        texto_erro = (
+            "❌ Não consegui gerar as imagens do calendário agora.\n\n"
+            f"🔗 Mas você pode acessar o arquivo oficial aqui:\n{url_reserva}"
+        )
+        bot.send_message(chat_id, texto_erro, disable_web_page_preview=False)
