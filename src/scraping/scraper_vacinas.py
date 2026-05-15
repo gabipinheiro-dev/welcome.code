@@ -6,28 +6,21 @@ import time
 from bs4 import BeautifulSoup
 
 # Dados na memória enquanto o bot roda
-# Começa vazio e é preenchido na primeira consulta
 _cache = {}
 
-# Endereço do site que vamos acessar
+# URL do calendário do Ministério da Saúde
 URL = 'https://www.gov.br/saude/pt-br/vacinacao/calendario'
 
-# Onde o arquivo JSON vai ser salvo (dentro da pasta scraping/)
+# Arquivo de cache (junto ao scraper)
 CACHE_FILE = os.path.join(os.path.dirname(__file__), 'cache_vacinas.json')
-
-# Quantas horas o JSON é válido antes de atualizar
 CACHE_HORAS = 48
 
-# Cabeçalho que simula um navegador real
-# Sem isso, alguns sites bloqueiam o acesso
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                   'AppleWebKit/537.36 (KHTML, like Gecko) '
                   'Chrome/91.0.4472.124 Safari/537.36'
 }
 
-# Cada perfil tem um título diferente na página do Ministério da Saúde
-# Usamos esse texto para encontrar a seção certa no HTML
 PERFIS_TITULOS = {
     'crianca':     'Criança (0 a 9 anos',
     'adolescente': 'Adolescente (10 a 19 anos',
@@ -36,60 +29,35 @@ PERFIS_TITULOS = {
     'gestante':    'Gestante (a gestante'
 }
 
-
-# -------------------------------------------------------
-# CACHE — salvar e carregar os dados no arquivo JSON
-# -------------------------------------------------------
-
+# -----------------------
+# Funções de cache
+# -----------------------
 def _cache_valido():
-    # Verifica se o arquivo JSON existe e ainda está dentro do prazo de 48h
-    # Retorna True (válido) ou False (precisa atualizar)
-
     if not os.path.exists(CACHE_FILE):
-        return False  # arquivo não existe ainda
-
+        return False
     segundos_desde_criacao = time.time() - os.path.getmtime(CACHE_FILE)
-    limite_em_segundos = CACHE_HORAS * 3600  # 48h convertido para segundos
-
-    return segundos_desde_criacao < limite_em_segundos
-
+    return segundos_desde_criacao < (CACHE_HORAS * 3600)
 
 def _salvar_cache(dados):
-    # Recebe o dicionário com todos os dados e salva no arquivo JSON
-    # ensure_ascii=False → mantém acentos (ã, é, ç...)
-    # indent=2 → deixa o arquivo legível com indentação
     with open(CACHE_FILE, 'w', encoding='utf-8') as f:
         json.dump(dados, f, ensure_ascii=False, indent=2)
-    print("Cache salvo em JSON!")
-
 
 def _carregar_cache():
-    # Lê o arquivo JSON e converte de volta para dicionário Python
     with open(CACHE_FILE, 'r', encoding='utf-8') as f:
-        dados = json.load(f)
-    print("Cache carregado com sucesso!")
-    return dados
+        return json.load(f)
 
-
-# -------------------------------------------------------
-# SCRAPING — acessar o site e coletar os dados
-# -------------------------------------------------------
-
+# -----------------------
+# SCRAPING
+# -----------------------
 def _fazer_scraping():
-    # Acessa o site do Ministério da Saúde e coleta os dados de todos os perfis
     print("Buscando dados no site do Ministério da Saúde...")
-
     response = requests.get(URL, timeout=30, headers=HEADERS)
-
-    # Se o site não respondeu corretamente, lança um erro
     if response.status_code != 200:
         raise Exception(f"Erro ao acessar o site: HTTP {response.status_code}")
 
-    # Transforma o HTML da página em algo que podemos navegar
     soup = BeautifulSoup(response.text, 'html.parser')
     resultado = {}
 
-    # Para cada perfil, chama a função que extrai as vacinas
     for perfil, titulo in PERFIS_TITULOS.items():
         resultado[perfil] = _extrair_perfil(soup, titulo)
         print(f"Perfil '{perfil}': {len(resultado[perfil])} fases encontradas")
@@ -98,38 +66,29 @@ def _fazer_scraping():
 
 
 def _extrair_perfil(soup, titulo_perfil):
-    # Recebe a página inteira e o título do perfil
-    # Devolve um dicionário com as fases e vacinas daquele perfil
     fases = {}
 
-    # Procura no HTML a tag que contém o título do perfil
+    # Localiza o título do perfil no HTML
     titulo_encontrado = None
     for tag in soup.find_all(['strong', 'b']):
         if titulo_perfil in tag.get_text():
             titulo_encontrado = tag
             break
 
-    # Se não achou o título, avisa e retorna vazio
     if not titulo_encontrado:
-        print(f"Aviso: '{titulo_perfil}' não encontrado na página")
+        # Não encontrado: devolve vazio
         return fases
 
-    # Sobe na estrutura do HTML para pegar o bloco que contém as fases
     bloco_pai = titulo_encontrado.find_parent(['p', 'div', 'section'])
     if not bloco_pai:
         return fases
 
-    # A lista de fases fica logo após o bloco do perfil
-    lista_fases = bloco_pai.find_next_sibling('ul')
-    if not lista_fases:
-        lista_fases = bloco_pai.find_next('ul')
+    lista_fases = bloco_pai.find_next_sibling('ul') or bloco_pai.find_next('ul')
     if not lista_fases:
         return fases
 
-    # Percorre cada fase (ex: "Ao nascer", "2 meses", "9 a 14 anos"...)
     for item_fase in lista_fases.find_all('li', recursive=False):
-
-        # Pega o nome da fase — é o primeiro texto dentro do item
+        # --- Nome da fase (ex: "Ao nascer", "9 a 14 anos", "A partir da 28ª semana gestacional")
         nome_fase = ''
         for filho in item_fase.children:
             if hasattr(filho, 'get_text'):
@@ -137,112 +96,114 @@ def _extrair_perfil(soup, titulo_perfil):
             else:
                 texto = str(filho).strip()
             if texto:
+                # Normalização mínima do nome da fase
+                texto = texto.replace('\u00A0', ' ')
+                texto = ' '.join(texto.split())
+                texto = re.sub(r'^[\s\-\u2022]+', '', texto)  # remove leading bullets/spaces/traços
                 nome_fase = texto
                 break
 
         if not nome_fase:
-            continue  # pula se não achou nome
+            continue
 
-        # Dentro de cada fase há uma sublista com as vacinas
+        # Sublista com as vacinas (UL dentro do LI)
         lista_vacinas = item_fase.find('ul')
         if not lista_vacinas:
-            continue  # pula se não tem vacinas nessa fase
+            continue
 
         vacinas_encontradas = []
 
-        # Percorre cada vacina da fase
         for item_vacina in lista_vacinas.find_all('li', recursive=False):
-            # Pega todo o texto da vacina em uma linha só
+            # Pega todo o texto em uma linha única
             texto = item_vacina.get_text(separator=' ', strip=True)
 
-            # Nome: tudo antes do primeiro '('
-            # Ex: "Hepatite B (1 dose)..." → "Hepatite B"
+            # ======= ALTERAÇÕES DE LIMPEZA E NORMALIZAÇÃO (MINIMAS) =======
+            # 1) Remove NBSP que às vezes quebra a formatação
+            texto = texto.replace('\u00A0', ' ')
+
+            # 2) Normaliza espaços
+            texto = ' '.join(texto.split())
+
+            # Nome da vacina: parte antes do primeiro '(' (se existir)
             nome = texto.split('(')[0].strip()
             nome = re.sub(r'^vacinas?\s+', '', nome, flags=re.IGNORECASE).strip()
 
-            # Dose: texto dentro do primeiro parênteses
-            # Ex: "Hepatite B (1 dose)..." → "1 dose"
+            # Dose: conteúdo dentro do primeiro parênteses (se houver e fechar)
             dose = ''
-            if '(' in texto:
+            if '(' in texto and ')' in texto:
                 dose = texto.split('(')[1].split(')')[0].strip()
+                dose = ' '.join(dose.split())
 
-            # Doenças prevenidas: texto após o marcador
-            # Ex: "Doenças evitadas: hepatite B, hepatite D"
+            # Previna: busca por marcadores (case-insensitive)
             previne = ''
-            for marcador in ['Doenças evitadas:', 'Doença evitada:']:
-                if marcador in texto:
-                    previne = texto.split(marcador)[-1].strip()
-                    if 'Obs.:' in previne:
-                        previne = previne.split('Obs.:')[0].strip()
+            lower_text = texto.lower()
+            for marcador in ['doenças evitadas:', 'doença evitada:']:
+                if marcador in lower_text:
+                    # pega substring após o marcador (usando o índice no lower_text para respeitar posição)
+                    idx = lower_text.find(marcador) + len(marcador)
+                    previne = texto[idx:].strip()
+
+                    # Remove qualquer bloco de "Obs.:" que venha após o previne
+                    lower_prev = previne.lower()
+                    if 'obs.:' in lower_prev:
+                        previne = previne[:lower_prev.find('obs.:')].strip()
+
+                    # Corrige espaços estranhos antes de vírgulas e garante uma vírgula seguida de espaço
+                    previne = re.sub(r'\s+,', ',', previne)
+                    previne = re.sub(r',\s*', ', ', previne)
+
+                    # Normaliza espaços extras
                     previne = ' '.join(previne.split())
                     break
+            # ======= FIM DAS ALTERAÇÕES =======
 
-            # Só adiciona se tiver nome
+            # Adiciona se tiver nome
             if nome:
                 vacinas_encontradas.append({
-                    'vacina': nome.capitalize(),       # primeira letra maiúscula
-                    'dose':   ' '.join(dose.split()),  # remove espaços extras
-                    'evita':  previne
+                    'vacina': nome.strip().capitalize(),
+                    'dose': dose,
+                    'evita': previne
                 })
 
-        # Só salva a fase se tiver pelo menos uma vacina
         if vacinas_encontradas:
             fases[nome_fase] = vacinas_encontradas
 
     return fases
 
-
-# -------------------------------------------------------
-# FUNÇÕES PÚBLICAS — usadas pelos outros arquivos
-# -------------------------------------------------------
-
+# -----------------------
+# Funções públicas
+# -----------------------
 def busca_vacinas(perfil=None):
     global _cache
-
-    # Se o _cache está vazio, tenta carregar os dados
     if not _cache:
         if _cache_valido():
-            _cache = _carregar_cache()  # rápido: lê o JSON salvo
+            _cache = _carregar_cache()
         else:
-            _cache = _fazer_scraping()  # lento: acessa o site
-            _salvar_cache(_cache)       # salva para usar nas próximas vezes
-
-    # Se passou um perfil, retorna só os dados dele
-    # Ex: busca_vacinas('idoso') → retorna só as fases do idoso
-    if perfil:
-        return _cache.get(perfil, {})  # {} = vazio se o perfil não existir
-
-    return _cache  # sem perfil → retorna tudo
+            _cache = _fazer_scraping()
+            _salvar_cache(_cache)
+    return _cache.get(perfil, _cache) if perfil else _cache
 
 
 def _normalizar(texto):
-    # Deixa o texto em minúsculas e remove espaços extras
-    # Usado para comparar textos sem se preocupar com maiúsculas
-    # Ex: "  A partir DOS 60 anos  " → "a partir dos 60 anos"
     return ' '.join(texto.lower().split())
 
 
 def buscar_fase(perfil, fase_busca):
-    # Busca as vacinas de uma fase dentro de um perfil
-    # Tenta de 3 formas diferentes para ser flexível
     dados = busca_vacinas(perfil)
     fase_norm = _normalizar(fase_busca)
 
-    # Tentativa 1: texto exatamente igual (ignorando maiúsculas e espaços)
+    # 1) igualdade após normalizar
     for chave, vacinas in dados.items():
         if _normalizar(chave) == fase_norm:
             return vacinas
 
-    # Tentativa 2: um texto contém o outro
-    # Ex: "60 anos" está dentro de "a partir dos 60 anos"
+    # 2) containment (mais flexível)
     for chave, vacinas in dados.items():
         chave_norm = _normalizar(chave)
         if fase_norm in chave_norm or chave_norm in fase_norm:
             return vacinas
 
-    # Tentativa 3: compara só os números
-    # Ex: busca "60" → bate com "A partir dos 60 anos"
-    # Útil se o site mudar o texto mas manter os números
+    # 3) tentativa por números (ex: "28")
     numeros_busca = re.findall(r'\d+', fase_busca)
     if numeros_busca:
         for chave, vacinas in dados.items():
@@ -250,5 +211,4 @@ def buscar_fase(perfil, fase_busca):
             if numeros_busca == numeros_chave:
                 return vacinas
 
-    # Nenhuma tentativa funcionou → retorna lista vazia
     return []
