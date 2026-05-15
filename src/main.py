@@ -1,11 +1,10 @@
-import os               # Para acessar variáveis de ambiente (como o token)
-import time             # Para pausas e controle de tempo
-import threading        # Para executar tarefas pesadas sem travar o bot
+import os
+import time
+import threading
+import telebot
+from dotenv import load_dotenv
 
-import telebot          # Biblioteca principal do bot
-from dotenv import load_dotenv   # Para ler o arquivo .env
-
-# Arquivo com funções do formulário de perguntas/respostas
+# Importa as funções do fluxo (respeitando sua estrutura em src/)
 from formulario import (
     iniciar_conversa,
     processar_resposta,
@@ -16,202 +15,125 @@ from formulario import (
     remover_usuario
 )
 
-# Arquivos que fazem scraping (buscam informações online)
 import scraping.scraper_pdf as scraper_pdf
 import scraping.scraper_vacinas as scraper_vacinas
 
-
-# Lê o token do arquivo .env (é onde você coloca seu token secreto)
+# Carrega o token do .env
 load_dotenv()
 TOKEN = os.getenv('TELEGRAM_TOKEN')
 
-# Verifica se o token existe. Se não existir, dá um aviso e fecha o programa.
 if not TOKEN or not TOKEN.strip():
-    print("❌ TELEGRAM_TOKEN não encontrado no arquivo .env")
-    print("💡 Crie o arquivo .env com: TELEGRAM_TOKEN=seu_token_aqui")
+    print("❌ Erro: TELEGRAM_TOKEN não configurado no .env")
     exit(1)
 
-# Cria o objeto do bot com o token lido
-# threaded=True permite atender várias pessoas ao mesmo tempo
+# Inicializa o bot (com threads para não travar operações bloqueantes)
 bot = telebot.TeleBot(TOKEN.strip(), threaded=True, num_threads=10)
 
-# Remove qualquer webhook antigo para garantir que estamos usando polling
-bot.remove_webhook()
+# Palavras-chave que reiniciam o fluxo
+saudacoes = ['oi', 'olá', 'ola', 'bom dia', 'boa tarde', 'boa noite', 'ajuda', 'start']
 
-# Lista de palavras que reiniciam a conversa
-saudacoes = ['oi', 'olá', 'ola', 'eae', 'opa', 'bom dia', 'boa tarde', 'boa noite','blz', 'fala', 'opa']
-
-
-# Função segura para responder ao clique nos botões inline
 def responder_callback_seguro(call):
-    # Confirma pro Telegram que o clique foi recebido (tira o ícone de carregando)
-    # Usamos try/except para evitar erros caso o botão tenha expirado
+  #Confirma o clique no botão para o Telegram (remove o reloginho do botão)
     try:
         bot.answer_callback_query(call.id)
     except Exception:
         pass
 
+# --- COMANDOS E TRATAMENTO DE MENSAGENS ---
 
-# ---- Comandos de texto ----
-
-# Quando alguém digita /start, inicia a conversa
-@bot.message_handler(commands=['start'])
-def start(msg):
-    iniciar_conversa(bot, msg.chat.id)
-
-
-# Quando alguém digita /reiniciar, limpa a sessão e começa de novo
-@bot.message_handler(commands=['reiniciar'])
-def reiniciar(msg):
+@bot.message_handler(commands=['start', 'reiniciar'])
+def comando_start(msg):
     remover_usuario(msg.chat.id)
     iniciar_conversa(bot, msg.chat.id)
 
-
-# Função que trata mensagens normais (não são comandos)
 @bot.message_handler(func=lambda msg: True)
-def responder(msg):
-    # Ignora se a mensagem não tem texto
+def tratar_mensagens(msg):
     if not msg.text:
         return
 
     texto = msg.text.lower().strip()
 
-    # Se for alguma saudação, reinicia a conversa
+    # Se for uma saudação, inicia conversa
     if any(s in texto for s in saudacoes):
         iniciar_conversa(bot, msg.chat.id)
         return
 
-    # Caso contrário, continua a conversa normalmente
+    # Caso contrário, passamos para o formulário processar
     processar_resposta(bot, msg)
 
+# --- HANDLERS DE CALLBACK (BOTÕES INLINE) ---
 
-# ---- Handlers dos botões ----
-
-# Botão "Saiba Mais"
 @bot.callback_query_handler(func=lambda call: call.data == "saiba_mais")
-def saiba_mais_callback(call):
+def cb_saiba_mais(call):
     responder_callback_seguro(call)
-
     texto = (
         "🤖 *Sobre o HealthyBot*\n\n"
-        "Consulta realizada através do site oficial do *Ministério da Saúde*:\n"
-        "https://www.gov.br/saude/pt-br/vacinacao\n\n"
-        "✅ *Informação oficial na palma da sua mão!*\n"
-        "• Consulta por faixa etária\n"
-        "• Orientações para gestantes\n"
-        "• Exibição de calendários oficiais\n\n"
-        "Pode digitar seu nome para continuarmos! 👇"
+        "Consulta realizada através do Site Oficial do MINISTÉRIO DA SAÚDE:\n\n"
+        "✅ *Informação e cuidado na palma da sua mão*\n"
+        "• Localizo vacinas por faixa etária\n"
+        "• Verifico doses para gestantes\n"
+        "• Mostro o que cada vacina previne\n"
+        "• Envio o calendário vacinal\n\n"
+        "👇 Vamos continuar? Qual é o seu nome?"
     )
+    bot.send_message(call.message.chat.id, texto, parse_mode='Markdown')
 
-    try:
-        bot.send_message(call.message.chat.id, texto, parse_mode='Markdown', disable_web_page_preview=True)
-    except Exception:
-        bot.send_message(call.message.chat.id, texto)
-
-
-# Botões "Para mim" ou "Outra pessoa"
 @bot.callback_query_handler(func=lambda call: call.data in ["user", "outra_pessoa"])
-def tipo_pessoa_callback(call):
+def cb_tipo_pessoa(call):
     responder_callback_seguro(call)
     processar_tipo_pessoa(bot, call)
 
-
-# Botões relacionados a bebês
 @bot.callback_query_handler(func=lambda call: call.data.startswith(("bebe", "nao_bebe")))
-def bebe_callback(call):
+def cb_bebe(call):
     responder_callback_seguro(call)
     processar_bebe(bot, call)
 
-
-# Botões relacionados a gestantes
-@bot.callback_query_handler(func=lambda call: call.data.startswith(("gestante", "nao_gestante")))
-def gestante_callback(call):
+@bot.callback_query_handler(func=lambda call: call.data in ["gestante", "nao_se_aplica"])
+def cb_gestante(call):
     responder_callback_seguro(call)
     processar_gestante(bot, call)
 
-
-# Botão "Ver Calendário Oficial"
 @bot.callback_query_handler(func=lambda call: call.data == "mais_info")
-def mais_info_callback(call):
+def cb_mais_info(call):
     responder_callback_seguro(call)
 
-    user_id = call.message.chat.id
-    usuario = obter_usuario(user_id)
+    uid = call.message.chat.id
+    u = obter_usuario(uid)
+    faixa = u.get('faixa')
 
-    # Verifica se ainda há dados do usuário
-    if not usuario:
-        bot.send_message(user_id, "⚠️ Sua sessão expirou.\n\nDigite 'Oi' para iniciar.")
-        return
-
-    faixa = usuario.get('faixa')
     if not faixa:
-        bot.send_message(user_id, "⚠️ Não identifiquei sua faixa etária.\n\nDigite 'Oi' para reiniciar.")
+        bot.send_message(uid, "⚠️ Sessão expirada. Digite 'Oi' para reiniciar.")
         return
 
-    # Mensagem de espera enquanto baixa o PDF
-    msg_espera = bot.send_message(
-        user_id,
-        "⏳ Gerando as imagens do calendário oficial...\nAguarde, isso pode levar até 30 segundos."
-    )
+    msg_espera = bot.send_message(uid, "⏳ Gerando imagens do calendário oficial... Aguarde.")
 
-    # Função interna para fazer o trabalho pesado sem travar o bot
-    def _processar():
+    def _trabalho_pesado():
         try:
-            # Baixa o PDF e envia como fotos
-            scraper_pdf.enviar_paginas_como_foto(bot, user_id, faixa)
+            scraper_pdf.enviar_paginas_como_foto(bot, uid, faixa)
+            bot.delete_message(uid, msg_espera.message_id)
+            bot.send_message(uid, "✅ Calendário enviado! Se precisar de algo mais, digite 'Oi' 💙")
+            remover_usuario(uid)
+        except Exception as e:
+            print(f"Erro PDF: {e}")
+            bot.send_message(uid, "❌ Erro ao baixar o PDF oficial.")
 
-            # Apaga a mensagem de espera
-            try:
-                bot.delete_message(user_id, msg_espera.message_id)
-            except Exception:
-                pass
+    threading.Thread(target=_trabalho_pesado, daemon=True).start()
 
-            bot.send_message(user_id, "✅ Espero ter ajudado! 😊\n\nSe precisar, envie um 'Oi' 💙")
-            remover_usuario(user_id)
-
-        except Exception as erro:
-            print(f"❌ Erro ao enviar PDF para o usuário {user_id}: {erro}")
-
-            try:
-                bot.delete_message(user_id, msg_espera.message_id)
-            except Exception:
-                pass
-
-            bot.send_message(user_id, "❌ Problema ao gerar o calendário.\n\nDigite 'Oi' para recomeçar.")
-
-    # Executa essa função em segundo plano (sem travar outras pessoas)
-    threading.Thread(target=_processar, daemon=True).start()
-
-
-# ---- Inicialização do Bot ----
+# --- INICIALIZAÇÃO DO BOT ---
 
 if __name__ == "__main__":
-    # Antes de começar a escutar mensagens, carrega os dados do site para agilizar
+    # Pré-carrega o site do governo para ter cache e deixar as respostas mais rápidas
     try:
         scraper_vacinas.busca_vacinas()
-        print("🟢 Cache carregado com sucesso!")
-    except Exception as erro:
-        print(f"🟡 Aviso: não foi possível pré-carregar o cache: {erro}")
+        print("🟢 Cache do site carregado!")
+    except Exception:
+        print("🟡 Aviso: Site do governo indisponível no momento.")
 
-    print("🚀 Bot online!")
+    print("🚀 Bot online e aguardando mensagens...")
 
-    # Loop infinito para manter o bot ligado sempre escutando novas mensagens
     while True:
         try:
-            # Começa a escutar mensagens continuamente
-            bot.polling(none_stop=True, skip_pending=True, interval=0, timeout=60)#timeou é o temo que leva para verificar novamente até reinicar outro ciclo
-        except KeyboardInterrupt:# Aqui se der CTRL+C ele para, da um kill no programa
-            print("\n👋 Bot encerrado manualmente.")
-            break
-        except telebot.apihelper.ApiTelegramException as erro:
-            # Erro 409 acontece quando duas instâncias estão rodando por exxemplo. Erro que vem diretamento do próprio Telegram
-            if getattr(erro, "error_code", None) == 409:
-                print("⚠️ Erro 409: outra instância do bot está rodando. Reconectando em 15s...")
-                bot.stop_polling()
-                time.sleep(15)
-            else:
-                print(f"📡 Erro do Telegram: {erro}")
-                time.sleep(5)
-        except Exception as erro:
-            print(f"💥 Erro inesperado: {erro}")
+            bot.polling(none_stop=True, skip_pending=True, timeout=60)
+        except Exception as e:
+            print(f"💥 Erro no polling: {e}")
             time.sleep(5)
