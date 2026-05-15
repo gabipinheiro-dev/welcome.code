@@ -158,7 +158,7 @@ def processar_resposta(bot, msg):
             if faixa == 'adulto':
                 atualizar_usuario(user_id, {'etapa': 'gestante'})
                 bot.send_message(user_id, "📌 A pessoa está gestante ou planejando gestação?",
-                                 reply_markup=botoes_formulario.gestante())
+                    reply_markup=botoes_formulario.gestante())
             else:
                 _enviar_em_thread(bot, user_id, faixa)
 
@@ -174,8 +174,8 @@ def processar_resposta(bot, msg):
         # Verifica se está dentro do limite
         if meses < 0 or meses > 24:
             bot.send_message(user_id,
-                             "❗ Digite uma idade entre 0 e 24 meses.\n"
-                             "Para crianças acima de 2 anos, digite 'Oi' e reinicie informando a idade em anos.")
+                    "❗ Digite uma idade entre 0 e 24 meses.\n"
+                    "Para crianças acima de 2 anos, digite 'Oi' e reinicie informando a idade em anos.")
             return
 
         atualizar_usuario(user_id, {'meses': meses})
@@ -264,8 +264,8 @@ def enviar_para_servico(bot, user_id, faixa):
                 fase = fases_proximas.get(meses)
                 if fase:
                     bot.send_message(user_id,
-                                     f"ℹ️ Mostrando vacinas para a fase mais próxima: *{fase}*",
-                                     parse_mode='Markdown')
+                    f"ℹ️ Mostrando vacinas para a fase mais próxima: *{fase}*",
+                    parse_mode='Markdown')
             fases = [fase] if fase else []
         else:
             # Para adultos, adolescentes, idosos...
@@ -276,9 +276,9 @@ def enviar_para_servico(bot, user_id, faixa):
         # Se não encontrou fase válida, pede o calendário completo
         if not fases or not fases[0]:
             bot.send_message(user_id,
-                             "⚠️ Não consegui determinar a fase no calendário oficial.\n\n"
-                             "💡 Acesse o calendário completo:",
-                             reply_markup=botoes_formulario.mais_informacoes())
+                    "⚠️ Não consegui determinar a fase no calendário oficial.\n\n"
+                    "💡 Acesse o calendário completo:",
+                    reply_markup=botoes_formulario.mais_informacoes())
             return
 
         # Monta a lista de vacinas
@@ -302,13 +302,13 @@ def enviar_para_servico(bot, user_id, faixa):
                 "💡 *Deseja o Calendário Oficial completo?*"
             )
             bot.send_message(user_id, mensagem, parse_mode='Markdown',
-                             reply_markup=botoes_formulario.mais_informacoes())
+                    reply_markup=botoes_formulario.mais_informacoes())
         else:
             # Se não achou, oferece o calendário oficial
             bot.send_message(user_id,
-                             "⚠️ Não encontrei vacinas específicas para esta fase.\n\n"
-                             "📄 Consulte o calendário oficial completo:",
-                             reply_markup=botoes_formulario.mais_informacoes())
+                    "⚠️ Não encontrei vacinas específicas para esta fase.\n\n"
+                    "📄 Consulte o calendário oficial completo:",
+                    reply_markup=botoes_formulario.mais_informacoes())
 
     except Exception as e:
         # Em caso de erro, avisa o usuário
