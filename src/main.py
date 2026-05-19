@@ -4,7 +4,7 @@ import threading
 import telebot
 from dotenv import load_dotenv
 
-# Importa as funções do fluxo (respeitando sua estrutura em src/)
+# Importa as funções do fluxo 
 from formulario import (
     iniciar_conversa,
     processar_resposta,
@@ -30,7 +30,7 @@ if not TOKEN or not TOKEN.strip():
 bot = telebot.TeleBot(TOKEN.strip(), threaded=True, num_threads=10)
 
 # Palavras-chave que reiniciam o fluxo
-saudacoes = ['oi', 'olá', 'ola', 'bom dia', 'boa tarde', 'boa noite', 'ajuda', 'start']
+saudacoes = ['oi', 'olá', 'ola', 'bom dia', 'boa tarde', 'boa noite', 'ajuda', 'start', 'opa', 'eae', 'eai', 'dia', 'tarde', 'noite', 'fala']
 
 def responder_callback_seguro(call):
   #Confirma o clique no botão para o Telegram (remove o reloginho do botão)
@@ -58,11 +58,13 @@ def tratar_mensagens(msg):
         iniciar_conversa(bot, msg.chat.id)
         return
 
-    # Caso contrário, passamos para o formulário processar
+    # Caso contrário, passa para o formulário processar
     processar_resposta(bot, msg)
 
 # --- HANDLERS DE CALLBACK (BOTÕES INLINE) ---
+    #Handlers que respondem aos cliques dos botões inline e encaminham o fluxo do formulário
 
+    #Mostra informações sobre o bot e pergunta o nome (acionado pelo botão "Saiba Mais")
 @bot.callback_query_handler(func=lambda call: call.data == "saiba_mais")
 def cb_saiba_mais(call):
     responder_callback_seguro(call)
@@ -78,21 +80,27 @@ def cb_saiba_mais(call):
     )
     bot.send_message(call.message.chat.id, texto, parse_mode='Markdown')
 
+#Pergunta se a consulta é para o próprio usuário ou para outra pessoa
 @bot.callback_query_handler(func=lambda call: call.data in ["user", "outra_pessoa"])
 def cb_tipo_pessoa(call):
     responder_callback_seguro(call)
     processar_tipo_pessoa(bot, call)
 
+#Pergunta se é um bebê (até 2 anos) e encaminha para fluxo de meses/idade
 @bot.callback_query_handler(func=lambda call: call.data.startswith(("bebe", "nao_bebe")))
 def cb_bebe(call):
     responder_callback_seguro(call)
     processar_bebe(bot, call)
 
+#Pergunta se a pessoa está gestante; define a próxima etapa conforme a resposta
 @bot.callback_query_handler(func=lambda call: call.data in ["gestante", "nao_se_aplica"])
 def cb_gestante(call):
     responder_callback_seguro(call)
     processar_gestante(bot, call)
 
+    #Gera e envia o Calendário Oficial para o usuário:
+    #valida sessão (faixa), envia mensagem de espera e dispara um worker em thread
+    #o worker orquestra a chamada ao scraper e cuida da UX (remoção da mensagem de espera e limpeza da sessão)
 @bot.callback_query_handler(func=lambda call: call.data == "mais_info")
 def cb_mais_info(call):
     responder_callback_seguro(call)
@@ -107,7 +115,10 @@ def cb_mais_info(call):
 
     msg_espera = bot.send_message(uid, "⏳ Gerando imagens do calendário oficial... Aguarde.")
 
-    def _trabalho_pesado():
+    #Envia o calendário oficial em background:
+    #chama scraper_pdf.enviar_paginas_como_foto(bot, uid, faixa)
+    #remove a mensagem de espera, avisa quando terminar e limpa a sessão do usuário
+    def _enviar_calendario_em_background():
         try:
             scraper_pdf.enviar_paginas_como_foto(bot, uid, faixa)
             bot.delete_message(uid, msg_espera.message_id)
@@ -117,7 +128,7 @@ def cb_mais_info(call):
             print(f"Erro PDF: {e}")
             bot.send_message(uid, "❌ Erro ao baixar o PDF oficial.")
 
-    threading.Thread(target=_trabalho_pesado, daemon=True).start()
+    threading.Thread(target=_enviar_calendario_em_background, daemon=True).start()
 
 # --- INICIALIZAÇÃO DO BOT ---
 
