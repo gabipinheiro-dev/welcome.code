@@ -19,7 +19,7 @@ HEADERS = {
 }
 
 def _baixar_pdf(perfil):
-    """Baixa o PDF do perfil solicitado ou recupera do cache interno."""
+    #Baixa o PDF do perfil solicitado ou recupera do cache interno.
     if perfil in _pdf_cache:
         return _pdf_cache[perfil]
 
@@ -35,7 +35,7 @@ def _baixar_pdf(perfil):
 
     conteudo = resposta.content
     
-    # Validação simples para garantir que o que baixamos é realmente um PDF
+    # Validação simples para garantir que  é realmente um PDF
     if not conteudo.startswith(b'%PDF'):
         raise Exception("O link não retornou um arquivo PDF válido.")
 
@@ -43,7 +43,7 @@ def _baixar_pdf(perfil):
     return conteudo
 
 def enviar_paginas_como_foto(bot, chat_id, perfil):
-    """Lê o PDF, transforma cada página em imagem e envia para o chat."""
+    #Lê o PDF, transforma cada página em imagem e envia para o chat.
     url_reserva = LINKS_PDF.get(perfil, "https://www.gov.br/saude/pt-br/vacinacao")
     
     try:
@@ -79,7 +79,7 @@ def enviar_paginas_como_foto(bot, chat_id, perfil):
 
     except Exception as e:
         print(f"Erro ao processar PDF ({perfil}): {e}")
-        # Caso o download ou processamento falhe, enviamos o link direto como alternativa
+        # Caso o download ou processamento falhe, envia o link direto como alternativa
         texto_erro = (
             "❌ Não consegui gerar as imagens do calendário agora.\n\n"
             f"🔗 Mas você pode acessar o arquivo oficial aqui:\n{url_reserva}"
