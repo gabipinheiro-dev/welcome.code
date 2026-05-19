@@ -1,5 +1,11 @@
-pyTelegramBotAPI
-python-dotenv
-requests
-beautifulsoup4
-PyMuPDF
+pyTelegramBotAPI==4.14.0
+python-dotenv==1.0.0
+requests==2.31.0
+beautifulsoup4==4.12.2
+
+pandas==2.1.4
+numpy==1.26.4
+openpyxl==3.1.2
+
+lxml==5.1.0
+PyMuPDF==1.24.3

@@ -1,5 +1,5 @@
 <p align="center">
-      <img src="https://github.com/turbodeliveryapi/welcome.code/blob/main/Logo%20da%20Equipe" width="200">
+      <img src="https://github.com/turbodeliveryapi/welcome.code/blob/main/docs/img/Logo%20da%20Equipe" width="200">
       <h2 align="center"> Platypus Dev</h2>
 
 # **API 1º Semestre ADS**
@@ -45,7 +45,7 @@ O desafio do produto consiste em desenvolver um bot interativo que, ao ser acion
 | Sprint | Período | MVP | Link para Documentação | Link para Vídeo no Youtube do Incremento Entregue |
 | ----------- | ----------- | ----------- | ----------- | ----------- |
 | 1 | 16/03/2026 a 05/04/2026 | [Sprint 1](./mvp/sprint-01/README.md) | <h4 align="center"> <a href="https://apiequipequet.atlassian.net/jira/software/projects/EQ/summary?atlOrigin=eyJpIjoiMzYyMTdjMDkyYzQzNDg3ZWE0YzNhMTllMGI2ZDRhNDYiLCJwIjoiaiJ9"><img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white"/></a>  </h4> | <h4 align="center"> <a href="https://youtube.com/shorts/D4LPyznxHVM?si=k8T46wLOupl0c_CJ"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white"/></a>  </h4> |
-| 2 | 12/04/2026 a 03/05/2026 | [Sprint 2](./mvp/sprint-02/README.md) | <h4 align="center"> <a href="..."><img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white"/></a>  </h4>  | <h4 align="center"> <a href="..."><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white"/></a>  </h4> |
+| 2 | 12/04/2026 a 03/05/2026 | [Sprint 2](./mvp/sprint-02/README.md) | <h4 align="center"> <a href="https://apiequipequet.atlassian.net/jira/software/projects/EQ/boards/67/backlog?atlOrigin=eyJpIjoiZmFlYmUxM2U0YTMxNDdmYWI0NmU3NmQ3ZjliNmQzODEiLCJwIjoiaiJ9"><img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white"/></a>  </h4>  | <h4 align="center"> <a href="https://youtube.com/shorts/jpJRoByxvrA?si=xk6s2tt8edtmkZUo"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white"/></a>  </h4> |
 | 3 | - | - | - | - |
 
 ## **Tecnologias utilizadas**
@@ -226,7 +226,7 @@ O ambiente em nuvem permite que o bot sempre fique ativo independentemente de on
       <td>Marcos</td>
       <td>Desenvolvedor</td>
       <td><a href="https://github.com/marcosgalvaov"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"></a></td>
-      <td><a href="https://www.linkedin.com/in/marcos-guilherme-galv%C3%A3o-615a253bb/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a></td>
+      <td><a href="https://www.linkedin.com/in/marcos-guilherme-galvao/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a></td>
     </tr>
     <tr>
       <td>Ana Paula Ramos</td>
