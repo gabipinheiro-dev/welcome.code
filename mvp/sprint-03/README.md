@@ -4,7 +4,7 @@
 Devolver ao usuário a localização dos postinhos de saúde mais próximos e opção informativa para grupos que possuem algum tipo de comorbidade.
 
 ## 💡 Solução
-Receber a localização do usuário para que se entregue o posto de saúde mais próximo e perguntar ao consultante se ele possui algum tipo de comorbidade, fazendo com que o BOT o conduza para melhores informações.
+Através do compartilhamento de localidade, receber a as coordenadas do usuário para que se entregue o posto de saúde mais próximo. Com um cadastro mais elaborado, perguntar ao usuário se ele possui algum tipo de comorbidade, fazendo com que o BOT o conduza para melhores informações.
 
 ## 👤 User Story
 | Rank | Prioridade | User story | Estimativa | Sprint |
@@ -30,7 +30,9 @@ Receber a localização do usuário para que se entregue o posto de saúde mais 
 | Entendimento | Há entendimento técnico suficiente para iniciar |
 
 ## Critérios de Aceitação
-- **Preencher**
+- BOT recebe com eficiência a localização do usuário.
+- Se devolve com exatidão a localidade do posto de saúde mais próximo.
+- Usuário consegue se informar sobre suas alternativas de vacinação caso ele tenha alguma comorbidade.
 
 ## DoD (Definition of Done)
 | Critério | Descrição |
