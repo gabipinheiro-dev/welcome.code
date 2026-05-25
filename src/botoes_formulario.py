@@ -19,7 +19,6 @@ def tipo_pessoa():
 
 def gestante():
     # Pergunta se a pessoa está gestante.
-    
     teclado = InlineKeyboardMarkup()
     teclado.row(
         InlineKeyboardButton("🤰 Sim, gestante", callback_data="gestante"),
@@ -41,3 +40,17 @@ def mais_informacoes():
     teclado = InlineKeyboardMarkup()
     teclado.add(InlineKeyboardButton("📄 Ver Calendário Oficial", callback_data="mais_info"))
     return teclado
+
+def vacinacao_domiciliar():
+    teclado = InlineKeyboardMarkup()
+    teclado.add(InlineKeyboardButton("Atendimento domiciliar", callback_data="vacinacao_domiciliar"))
+    return teclado
+
+def menu_inicial():
+    teclado = InlineKeyboardMarkup()
+    teclado.row(
+        InlineKeyboardButton("ℹ️ Saiba Mais", callback_data="saiba_mais"),
+        InlineKeyboardButton("🏠Atendimento domiciliar", callback_data="vacinacao_domiciliar")
+    )
+    return teclado
+

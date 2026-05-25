@@ -90,7 +90,7 @@ def iniciar_conversa(bot, user_id):
     )
 
     # Envia a mensagem com estilo Markdown e o botão "Saiba Mais"
-    bot.send_message(user_id, texto, parse_mode='Markdown', reply_markup=botoes_formulario.saiba_mais())
+    bot.send_message(user_id, texto, parse_mode='Markdown', reply_markup=botoes_formulario.menu_inicial())
 
 
 # Função que trata respostas escritas pelo usuário
