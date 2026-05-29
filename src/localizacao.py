@@ -50,9 +50,9 @@ def buscar_postos_proximos(lat, lon, raio_metros=3000):
         print(f"[Overpass] Erro crítico na busca: {e}")
         return []
     
-    # Célula 3: Testando com coordenadas reais (Exemplo: Região da casa da Gabrielle)
-MINHA_LAT = -23.258372
-MINHA_LON = -45.880977
+    # Célula 3: Testando com coordenadas reais (Ex: Avenida Paulista - SP)
+MINHA_LAT = -23.556821
+MINHA_LON = -46.661417
 
 print(f"Procurando postos num raio de 3km a partir de: {MINHA_LAT}, {MINHA_LON}...\n")
 
@@ -225,7 +225,7 @@ def buscar_coordenadas_por_texto(texto_endereco):
             busca_tratada = busca
 
     else:
-        # 🚨 DICIONÁRIO DE ABREVIAÇÕES: Mapeia tudo o que o usuário pode digitar de forma encurtada
+        # DICIONÁRIO DE ABREVIAÇÕES: Mapeia tudo o que o usuário pode digitar de forma encurtada
         substituicoes = {
             'av': 'avenida', 'av.': 'avenida',
             'r': 'rua', 'r.': 'rua',
